@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE")
+    }
+}
+
+plugins {
+    id 'java'
+    id 'application'
+}
+
+mainClassName = 'App'
+
+dependencies {
+    compile "fastily:mw-oauth:0.0.1"
+    compile "fastily:jwiki:1.5.1"
+    compile "org.springframework.boot:spring-boot-starter-web:2.0.0.RELEASE"
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.6'
+}
