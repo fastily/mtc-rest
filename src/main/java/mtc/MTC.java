@@ -30,7 +30,7 @@ import fastily.jwiki.util.FSystem;
 public class MTC
 {
 	/**
-	 * Cache of whether a Template exists on Commons.
+	 * Cached results of whether a given template exists on Commons.
 	 */
 	protected HashMap<String, Boolean> ctpCache = new HashMap<>();
 
@@ -60,7 +60,7 @@ public class MTC
 	protected HashSet<String> whitelist;
 
 	/**
-	 * Creates an MTC object.
+	 * Constructor, creates an MTC object.
 	 */
 	public MTC()
 	{
@@ -91,6 +91,16 @@ public class MTC
 	 * 
 	 * @param titles The List of enwp files to transfer
 	 * @return An ArrayList of TransferObject objects.
+	 */
+	/**
+	 * Creates FileInfo objects from a list of titles. If a file is not eligible, a FileInfo object will not be returned
+	 * for it.
+	 * 
+	 * @param titles The titles to use.
+	 * @param ignoreFilter Set true to ignore the {@code blacklist}
+	 * @param useTrackingCat Set true to append the MTC! tracking category to generated text
+	 * @param cats Additional categories to add to generated text.
+	 * @return A List of FileInfo objects for eligible files.
 	 */
 	public ArrayList<FileInfo> makeTransferFile(ArrayList<String> titles, boolean ignoreFilter, boolean useTrackingCat,
 			ArrayList<String> cats)
@@ -129,6 +139,12 @@ public class MTC
 		return l;
 	}
 
+	/**
+	 * Creates and stores generated wikitext for files to transfer.
+	 * 
+	 * @author Fastily
+	 *
+	 */
 	public class FileInfo
 	{
 		/**
@@ -166,7 +182,9 @@ public class MTC
 		 * 
 		 * @param wpFN The enwp title to transfer
 		 * @param comFN The commons title to transfer to
-		 * @param enwpCats List of categories on the enwp file description page
+		 * @param isOwnWork Set true if the file is tagged as own work.
+		 * @param useTrackingCat Set true to append the MTC! tracking category to generated text.
+		 * @param cats Additional categories to add to generated text.
 		 */
 		protected FileInfo(String wpFN, String comFN, boolean isOwnWork, boolean useTrackingCat, ArrayList<String> cats)
 		{
@@ -178,7 +196,7 @@ public class MTC
 		}
 
 		/**
-		 * Processes parsed text and templates from the API
+		 * Actually generates the wikitext.
 		 */
 		public void gen()
 		{
@@ -333,13 +351,18 @@ public class MTC
 		/**
 		 * Generates description pages for the specified titles.
 		 * 
-		 * @param title The titles to get description pages for.
-		 * @return A List of FileInfo objects.
+		 * @param title The titles to get description pages for.  Multiple parameters are acceptable.
+		 * @param ignoreFilter Set true to ignore the {@code blacklist}
+		 * @param useTrackingCat Set true to append the MTC! tracking category to generated text
+		 * @param cats Additional categories to add to generated text.
+		 * @return A List of FileInfo objects created from eligible files.
 		 */
-		@RequestMapping(value = "/genDesc", method = RequestMethod.GET)
-		public ArrayList<FileInfo> generateDescPage(@RequestParam(defaultValue="") String[] title)
+		@RequestMapping(value = "/genDesc", method = { RequestMethod.GET, RequestMethod.POST })
+		public ArrayList<FileInfo> generateDescPage(@RequestParam(defaultValue = "") String[] title,
+				@RequestParam(defaultValue = "false") boolean ignoreFilter, @RequestParam(defaultValue = "false") boolean useTrackingCat,
+				@RequestParam(defaultValue = "") String[] cats)
 		{
-			ArrayList<FileInfo> fl = mtc.makeTransferFile(FL.toSAL(title), true, true, new ArrayList<>());
+			ArrayList<FileInfo> fl = mtc.makeTransferFile(FL.toSAL(title), ignoreFilter, useTrackingCat, FL.toSAL(cats));
 			fl.forEach(FileInfo::gen);
 
 			return fl;
