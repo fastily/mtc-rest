@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE")
     }
 }
 
@@ -16,8 +16,8 @@ mainClassName = 'App'
 
 dependencies {
     compile "fastily:mw-oauth:0.0.1"
-    compile "fastily:jwiki:1.5.1"
-    compile "org.springframework.boot:spring-boot-starter-web:2.0.0.RELEASE"
+    compile "fastily:jwiki:1.6.1"
+    compile "org.springframework.boot:spring-boot-starter-web:2.0.1.RELEASE"
 }
 
 repositories {
@@ -26,5 +26,5 @@ repositories {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.6'
+    gradleVersion = '4.7'
 }
