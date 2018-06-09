@@ -118,14 +118,13 @@ public class MTC
 		});
 
 		ArrayList<FileInfo> l = new ArrayList<>();
-		MQuery.exists(com, titles).forEach((k, v) -> {
-
-			// determine own work status
-			boolean isOwnWork = catL.get(k).contains("Category:Self-published work");
-
+		HashSet<String> titleExistsL = new HashSet<>(MQuery.exists(com, true, titles));
+		
+		for(String k : titles)
+		{
 			// resolve file name conflicts between transfers.
 			String comFN;
-			if (!v)
+			if (!titleExistsL.contains(k))
 				comFN = k;
 			else
 				do
@@ -133,8 +132,8 @@ public class MTC
 					comFN = new StringBuilder(k).insert(k.lastIndexOf('.'), " " + Math.round(Math.random() * 1000)).toString();
 				} while (com.exists(comFN));
 
-			l.add(new FileInfo(k, comFN, isOwnWork, useTrackingCat, cats));
-		});
+			l.add(new FileInfo(k, comFN, catL.get(k).contains("Category:Self-published work"), useTrackingCat, cats));
+		}
 
 		return l;
 	}
@@ -364,7 +363,7 @@ public class MTC
 		{
 			ArrayList<FileInfo> fl = mtc.makeTransferFile(FL.toSAL(title), ignoreFilter, useTrackingCat, FL.toSAL(cats));
 			fl.forEach(FileInfo::gen);
-
+			
 			return fl;
 		}
 	}

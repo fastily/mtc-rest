@@ -1,23 +1,15 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE")
-    }
-}
-
 plugins {
+    id "org.springframework.boot" version "2.0.2.RELEASE"
     id 'java'
     id 'application'
+    id 'eclipse'
 }
 
-mainClassName = 'App'
+mainClassName = 'mtc.MTCWebApp'
 
 dependencies {
-    compile "fastily:mw-oauth:0.0.1"
     compile "fastily:jwiki:1.6.1"
-    compile "org.springframework.boot:spring-boot-starter-web:2.0.1.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-web:2.0.2.RELEASE"
 }
 
 repositories {
@@ -25,6 +17,6 @@ repositories {
     jcenter()
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.7'
+wrapper {
+    gradleVersion = '4.8'
 }
