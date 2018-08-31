@@ -1,5 +1,5 @@
 plugins {
-    id "org.springframework.boot" version "2.0.3.RELEASE"
+    id 'org.springframework.boot' version '2.0.4.RELEASE'
     id 'java'
     id 'application'
     id 'eclipse'
@@ -9,7 +9,7 @@ mainClassName = 'mtc.MTCWebApp'
 
 dependencies {
     compile "fastily:jwiki:1.6.1"
-    compile "org.springframework.boot:spring-boot-starter-web:2.0.3.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-web:2.0.4.RELEASE"
 }
 
 repositories {
@@ -18,5 +18,5 @@ repositories {
 }
 
 wrapper {
-    gradleVersion = '4.9'
+    gradleVersion = '4.10'
 }
