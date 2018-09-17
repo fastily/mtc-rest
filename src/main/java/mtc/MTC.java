@@ -19,7 +19,7 @@ import fastily.jwiki.core.WParser.WTemplate;
 import fastily.jwiki.core.WParser.WikiText;
 import fastily.jwiki.dwrap.ImageInfo;
 import fastily.jwiki.util.FL;
-import fastily.jwiki.util.FSystem;
+import fastily.wptoolbox.Dates;
 
 /**
  * Business Logic for MTC. Contains shared methods, constants, and Objects.
@@ -301,7 +301,7 @@ public class MTC
 
 			for (ImageInfo ii : imgInfoL)
 				comText += String.format("%n|-%n| %s || %d × %d || [[w:User:%s|%s]] || ''<nowiki>%s</nowiki>''",
-						FSystem.iso8601dtf.format(LocalDateTime.ofInstant(ii.timestamp, ZoneOffset.UTC)), ii.width, ii.height, ii.user,
+						Dates.iso8601dtf.format(LocalDateTime.ofInstant(ii.timestamp, ZoneOffset.UTC)), ii.width, ii.height, ii.user,
 						ii.user, ii.summary.replace("\n", " ").replace("  ", " "));
 			comText += "\n|}\n";
 

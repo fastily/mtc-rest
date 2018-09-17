@@ -8,15 +8,16 @@ plugins {
 mainClassName = 'mtc.MTCWebApp'
 
 dependencies {
-    compile "fastily:jwiki:1.6.1"
+	compile 'fastily:wp-toolbox:0.0.2'
     compile "org.springframework.boot:spring-boot-starter-web:2.0.4.RELEASE"
 }
 
 repositories {
     mavenLocal()
     jcenter()
+	mavenCentral()
 }
 
 wrapper {
-    gradleVersion = '4.10'
+    gradleVersion = '4.10.1'
 }
